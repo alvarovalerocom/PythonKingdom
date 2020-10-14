@@ -3,6 +3,7 @@ from Pet import Pet
 from Hero import Hero
 from Healer import Healer
 from Weapon import BasicSword, LightStick
+from Map import Map
 basicsword = BasicSword("", 20, 20,5)
 lightstick = LightStick("",3,0,100)
 print(basicsword.name)
@@ -11,12 +12,17 @@ valkiria = Hero("Valkiria", 100, 20, basicsword,"rage")
 lux = Healer("Lux",60,60,lightstick,"heal")
 
 pomm = Pet("Pomm", 30,0,"Bag")
+
+cave = Map("Cave",1)#1 es el número de dificultad
+
+
+
 #################################################
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QTextEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QTextEdit, QPushButton
 from PyQt5.QtGui import QPainter, QColor, QPen 
 from PyQt5.QtGui import QIcon , QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5 import QtCore, QtGui 
 class App(QWidget):
 
@@ -96,15 +102,37 @@ class App(QWidget):
          
         #Monster labels
 
-        #Story labels
+        #Level labels
+        self.mapNameLabel = QLabel(cave.name,self)
+        self.mapNameLabel.setFont(QtGui.QFont("Times",20,QtGui.QFont.Bold))
+        self.mapNameLabel.setGeometry(770,10,500,100)
+
+        self.mapDifficultyLabel = QLabel(str(cave.difficulty),self)
+        self.mapDifficultyLabel.setFont(QtGui.QFont("Times",10,QtGui.QFont.Bold))
+        self.mapDifficultyLabel.setStyleSheet("color:red")
+        self.mapDifficultyLabel.setGeometry(760,3,500,100)
 
         #Action buttons
+        def nextMapLevel(self):
+            print("Next level wow")
+        self.nextMapLevelButton = QPushButton("Next Level",self)
+        self.nextMapLevelButton.move(800,300)
+        self.nextMapLevelButton.clicked.connect(nextMapLevel)
 
+        def previousMapLevel(self):
+            print("Previous level")
+        self.previousMapLevelButton = QPushButton("Previous Level",self)
+        self.previousMapLevelButton.move(800,260)
+        self.previousMapLevelButton.clicked.connect(previousMapLevel)
 
         
         
         self.show()
-    
+        """@pyqtSlot()
+        def nextMapLevelButton_on_click(self):
+            print("clicked forward")
+"""
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
