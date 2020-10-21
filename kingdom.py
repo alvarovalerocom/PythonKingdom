@@ -16,7 +16,8 @@ pomm = Pet("Pomm", 30,0,"Bag")
 cave = Map("Cave",1)#1 es el número de dificultad
 
 
-
+currentMapLevel = 0
+maximumMapLevel = 10
 #################################################
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QTextEdit, QPushButton
@@ -103,7 +104,7 @@ class App(QWidget):
         #Monster labels
 
         #Level labels
-        self.mapNameLabel = QLabel(cave.name,self)
+        self.mapNameLabel = QLabel(cave.name + "("+str(currentMapLevel)+"/"+str(maximumMapLevel)+")",self)
         self.mapNameLabel.setFont(QtGui.QFont("Times",20,QtGui.QFont.Bold))
         self.mapNameLabel.setGeometry(770,10,500,100)
 
@@ -111,28 +112,26 @@ class App(QWidget):
         self.mapDifficultyLabel.setFont(QtGui.QFont("Times",10,QtGui.QFont.Bold))
         self.mapDifficultyLabel.setStyleSheet("color:red")
         self.mapDifficultyLabel.setGeometry(760,3,500,100)
-
+   
         #Action buttons
-        def nextMapLevel(self):
-            print("Next level wow")
-        self.nextMapLevelButton = QPushButton("Next Level",self)
-        self.nextMapLevelButton.move(800,300)
-        self.nextMapLevelButton.clicked.connect(nextMapLevel)
+        nextMapLevelButton = QPushButton("Next Level",self)
+        nextMapLevelButton.move(800,300)
+        nextMapLevelButton.clicked.connect(self.nextMapLevel)
 
-        def previousMapLevel(self):
-            print("Previous level")
-        self.previousMapLevelButton = QPushButton("Previous Level",self)
-        self.previousMapLevelButton.move(800,260)
-        self.previousMapLevelButton.clicked.connect(previousMapLevel)
+        previousMapLevelButton = QPushButton("Previous Level",self)
+        previousMapLevelButton.move(800,260)
+        previousMapLevelButton.clicked.connect(self.previousMapLevel)
 
         
         
         self.show()
-        """@pyqtSlot()
-        def nextMapLevelButton_on_click(self):
-            print("clicked forward")
-"""
+   
+    @pyqtSlot()
+    def previousMapLevel(self):
+        self.mapNameLabel.setText("laloal")
 
+    def nextMapLevel(self):
+        self.mapNameLabel.setText("next level")
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
