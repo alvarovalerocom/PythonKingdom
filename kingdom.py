@@ -13,11 +13,12 @@ lux = Healer("Lux",60,60,lightstick,"heal")
 
 pomm = Pet("Pomm", 30,0,"Bag")
 
-cave = Map("Cave",1)#1 es el número de dificultad
+
+map = Map("Cave",1,1,10)#1 es el número de dificultad
 
 
-currentMapLevel = 0
-maximumMapLevel = 10
+#currentMapLevel = 0
+#maximumMapLevel = 10
 #################################################
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QTextEdit, QPushButton
@@ -104,11 +105,11 @@ class App(QWidget):
         #Monster labels
 
         #Level labels
-        self.mapNameLabel = QLabel(cave.name + "("+str(currentMapLevel)+"/"+str(maximumMapLevel)+")",self)
+        self.mapNameLabel = QLabel(map.name + "("+str(map.currentLevel)+"/"+str(map.maximumLevel)+")",self)
         self.mapNameLabel.setFont(QtGui.QFont("Times",20,QtGui.QFont.Bold))
         self.mapNameLabel.setGeometry(770,10,500,100)
 
-        self.mapDifficultyLabel = QLabel(str(cave.difficulty),self)
+        self.mapDifficultyLabel = QLabel(str(map.difficulty),self)
         self.mapDifficultyLabel.setFont(QtGui.QFont("Times",10,QtGui.QFont.Bold))
         self.mapDifficultyLabel.setStyleSheet("color:red")
         self.mapDifficultyLabel.setGeometry(760,3,500,100)
@@ -128,10 +129,18 @@ class App(QWidget):
    
     @pyqtSlot()
     def previousMapLevel(self):
-        self.mapNameLabel.setText("laloal")
+        if map.currentLevel == 1:
+            return
+        map.currentLevel = (map.currentLevel -1) 
+        
+        self.mapNameLabel.setText(map.name + "("+str(map.currentLevel)+"/"+str(map.maximumLevel)+")")
 
     def nextMapLevel(self):
-        self.mapNameLabel.setText("next level")
+        if map.currentLevel == 10:
+            return
+        map.currentLevel = (map.currentLevel +1)
+
+        self.mapNameLabel.setText(map.name + "("+str(map.currentLevel)+"/"+str(map.maximumLevel)+")")
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()

@@ -6,9 +6,14 @@ class Weapon:
         self.defense = defense
         self.durability = durability
     def getInfo(self):
-        print(self.name, self.attack, self.defense)
-    def noWeaponString(self):
-        return "no weapon equiped"
+        if self.name == False:
+            return "no weapon equiped"
+        else:
+            print(self.name, self.attack, self.defense)
+    
+
+    #def setWeapon(self):
+
 class BasicSword(Weapon):
     def __init__(self,name,attack,defense,durability):
         super().__init__("Basic Sword",attack,defense,durability)
