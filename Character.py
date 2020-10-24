@@ -12,7 +12,7 @@ class Character:
 
     def addWeapon(self):
         equiped = True
-        self.weapon = weapon
+        #self.weapon = weapon
         self.weapon.name = self.weapon.name
         
         

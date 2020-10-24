@@ -4,6 +4,7 @@ from Hero import Hero
 from Healer import Healer
 from Weapon import BasicSword, LightStick
 from Map import Map
+from Cave import Cave
 basicsword = BasicSword("", 20, 20,5)
 lightstick = LightStick("",3,0,100)
 print(basicsword.name)
@@ -14,7 +15,8 @@ lux = Healer("Lux",60,60,lightstick,"heal")
 pomm = Pet("Pomm", 30,0,"Bag")
 
 
-map = Map("Cave",1,1,10)#1 es el número de dificultad
+map = Cave("Cave",1,1,10,"first")
+map.getCurrentLevelInfo()
 
 
 #currentMapLevel = 0
@@ -108,6 +110,10 @@ class App(QWidget):
         self.mapNameLabel = QLabel(map.name + "("+str(map.currentLevel)+"/"+str(map.maximumLevel)+")",self)
         self.mapNameLabel.setFont(QtGui.QFont("Times",20,QtGui.QFont.Bold))
         self.mapNameLabel.setGeometry(770,10,500,100)
+        
+        self.mapStoryLabel = QLabel(map.currentLevelString,self)
+        self.mapStoryLabel.setFont(QtGui.QFont("Times",14,QtGui.QFont.Bold))
+        self.mapStoryLabel.setGeometry(200,3,500,100)
 
         self.mapDifficultyLabel = QLabel(str(map.difficulty),self)
         self.mapDifficultyLabel.setFont(QtGui.QFont("Times",10,QtGui.QFont.Bold))
@@ -134,6 +140,7 @@ class App(QWidget):
         map.currentLevel = (map.currentLevel -1) 
         
         self.mapNameLabel.setText(map.name + "("+str(map.currentLevel)+"/"+str(map.maximumLevel)+")")
+        self.mapStoryLabel.setText(map.getCurrentLevelInfo())
 
     def nextMapLevel(self):
         if map.currentLevel == 10:
@@ -141,6 +148,8 @@ class App(QWidget):
         map.currentLevel = (map.currentLevel +1)
 
         self.mapNameLabel.setText(map.name + "("+str(map.currentLevel)+"/"+str(map.maximumLevel)+")")
+
+        self.mapStoryLabel.setText(map.getCurrentLevelInfo())
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
